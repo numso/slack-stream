@@ -19,10 +19,10 @@ try {
     .then(resp => {
       const blocks = resp.data.messages[0].blocks
       blocks[1].text.text = blocks[1].text.text
-        .replace(/:gh-actions-running:/g, ':gh-actions-approved:')
         .split(' --&gt; ')
         .map(value => {
           if (value !== `:gh-actions-pending: ${name}`) return value
+          // LINK THE STEP
           return `:gh-actions-running: ${name}`
         })
         .join(' --> ')
@@ -40,6 +40,13 @@ try {
         }
       )
     )
+    .then(() => {
+      core.exportVariable('SLACK_STEP', name)
+      core.exportVariable('SLACK_TIME', +new Date())
+    })
+    .catch(error => {
+      core.setFailed(error.message)
+    })
 } catch (error) {
   core.setFailed(error.message)
 }

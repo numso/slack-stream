@@ -1,9 +1,0 @@
-name: 'SlackStream:Update'
-description: 'Update a slack message'
-inputs:
-  name:
-    description: 'Name of the current step'
-    required: true
-runs:
-  using: 'node12'
-  main: 'index.js'

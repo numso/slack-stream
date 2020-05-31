@@ -15,14 +15,18 @@ jobs:
           channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Deploy'
       - run: sleep 1s
-      - uses: numso/slack-stream/update@master
+      - uses: numso/slack-stream/start-step@master
         with:
           name: 'Test'
-      - run: sleep 3s
-      - uses: numso/slack-stream/update@master
+      - run: sleep 8s
+      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/start-step@master
         with:
           name: 'Build'
-      - run: sleep 3s
-      - uses: numso/slack-stream/update@master
+      - run: sleep 5s
+      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/start-step@master
         with:
           name: 'Deploy'
+      - run: sleep 3s
+      - uses: numso/slack-stream/finish-step@master

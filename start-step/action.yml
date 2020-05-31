@@ -1,0 +1,9 @@
+name: 'SlackStream:StartStep'
+description: 'Update slack that a step has started'
+inputs:
+  name:
+    description: 'Name of the step'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
