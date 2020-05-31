@@ -8,8 +8,8 @@ jobs:
     name: 'Build'
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ toJSON(steps) }}
-      - run: echo ${{ toJSON(job) }}
+      - run: echo ${{ fromJSON(steps) }}
+      - run: echo ${{ fromJSON(job) }}
 
       - uses: numso/slack-stream/slack-stream/create@master
         with:
