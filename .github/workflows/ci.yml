@@ -8,32 +8,31 @@ jobs:
     name: 'Build'
     runs-on: ubuntu-latest
     steps:
-      - uses: numso/slack-stream/create@master
+      - uses: numso/slack-stream/slack-stream/create@master
         with:
           token: ${{ secrets.SLACK_TOKEN }}
           channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Verify|Production|Repository'
-      - run: sleep 1s
 
-      - uses: numso/slack-stream/start-step@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
-      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/slack-stream/finish@master
 
-      - uses: numso/slack-stream/start-step@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 1s
-      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/slack-stream/finish@master
 
-      - uses: numso/slack-stream/start-step@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 5s
-      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/slack-stream/finish@master
 
-      - uses: numso/slack-stream/start-step@master
-      - run: aoeuaoeuaoeu
-      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/slack-stream/start@master
+      - run: sleep 1s
+      - uses: numso/slack-stream/slack-stream/finish@master
 
-      - uses: numso/slack-stream/start-step@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
-      - uses: numso/slack-stream/finish-step@master
+      - uses: numso/slack-stream/slack-stream/finish@master
 
       - if: ${{ failure() }}
-        uses: numso/slack-stream/error@master
+        uses: numso/slack-stream/slack-stream/error@master
