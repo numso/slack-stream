@@ -12,14 +12,19 @@ jobs:
         with:
           token: ${{ secrets.SLACK_TOKEN }}
           channel: ${{ secrets.SLACK_CHANNEL }}
-          steps: 'Test|Build|Deploy'
+          steps: 'Test|Build|Verify|Deploy'
 
       - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
-      - run: aoeuaoeuoeu
+      - run: sleep 3s
+      - uses: numso/slack-stream/slack-stream/finish@master
+
+      - uses: numso/slack-stream/slack-stream/start@master
+      - run: sleep 3s
+      - run: aoeuaoeuaou
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
