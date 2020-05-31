@@ -8,12 +8,15 @@ jobs:
     name: 'Build'
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ toJSON(steps) }}
+      - run: echo ${{ toJSON(job) }}
+
       - uses: numso/slack-stream/slack-stream/create@master
         with:
           token: ${{ secrets.SLACK_TOKEN }}
           channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Deploy'
-          blah: ${{ steps }}
+          blah: ${{ toJSON(steps) }}
 
       - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
