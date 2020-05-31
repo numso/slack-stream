@@ -1,3 +1,0 @@
-- [ ] link each of the action text to their step (maybe when it comes their turn)
-
-note: bot must have `chat:write` and `channels:history`

@@ -6,14 +6,15 @@ try {
     SLACK_TOKEN: token,
     SLACK_CHANNEL: channel,
     SLACK_TS: ts,
-    SLACK_STEP: name,
+    SLACK_STEP_INDEX: index,
     SLACK_TIME: time
   } = process.env
+  core.exportVariable('SLACK_STEP_INDEX', parseInt(index) + 1)
   const endTime = +new Date()
   const totalSeconds = Math.round((endTime - time) / 1000)
   const minutes = Math.floor(totalSeconds / 60)
   const seconds = `${totalSeconds - minutes * 60}`.padStart(2, '0')
-  const duration = minutes > 59 ? '> 1 hour' : `${minutes}:${seconds}`
+  const duration = minutes > 59 ? ' (> 1 hour)' : ` (${minutes}:${seconds})`
   axios
     .get('https://slack.com/api/conversations.history', {
       params: { channel, latest: ts, limit: 1, inclusive: true },
@@ -26,9 +27,9 @@ try {
       const blocks = resp.data.messages[0].blocks
       blocks[1].text.text = blocks[1].text.text
         .split(' --&gt; ')
-        .map(value => {
-          if (value !== `:gh-actions-running: ${name}`) return value
-          return `:gh-actions-approved: ${name} (${duration})`
+        .map((value, i) => {
+          if (index !== i) return value
+          return value.replace('running:', 'approved:') + duration
         })
         .join(' --> ')
       return blocks

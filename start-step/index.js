@@ -5,9 +5,10 @@ try {
   const {
     SLACK_TOKEN: token,
     SLACK_CHANNEL: channel,
-    SLACK_TS: ts
+    SLACK_TS: ts,
+    SLACK_STEP_INDEX
   } = process.env
-  const name = core.getInput('name')
+  const index = parseInt(SLACK_STEP_INDEX || '0')
   axios
     .get('https://slack.com/api/conversations.history', {
       params: { channel, latest: ts, limit: 1, inclusive: true },
@@ -20,10 +21,9 @@ try {
       const blocks = resp.data.messages[0].blocks
       blocks[1].text.text = blocks[1].text.text
         .split(' --&gt; ')
-        .map(value => {
-          if (value !== `:gh-actions-pending: ${name}`) return value
-          // LINK THE STEP
-          return `:gh-actions-running: ${name}`
+        .map((value, i) => {
+          if (i !== index) return value
+          return value.replace('pending:', 'running:')
         })
         .join(' --> ')
       return blocks
@@ -41,7 +41,7 @@ try {
       )
     )
     .then(() => {
-      core.exportVariable('SLACK_STEP', name)
+      core.exportVariable('SLACK_STEP_INDEX', index)
       core.exportVariable('SLACK_TIME', +new Date())
     })
     .catch(error => {
