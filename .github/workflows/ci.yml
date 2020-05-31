@@ -16,15 +16,15 @@ jobs:
       - run: sleep 1s
 
       - uses: numso/slack-stream/start-step@master
-      - run: sleep 8s
+      - run: sleep 18s
       - uses: numso/slack-stream/finish-step@master
 
       - uses: numso/slack-stream/start-step@master
-      - run: sleep 5s
+      - run: sleep 15s
       - uses: numso/slack-stream/finish-step@master
 
       - uses: numso/slack-stream/start-step@master
-      - run: sleep 10s
+      - run: sleep 30s
       - run: asotneuhsateu
       - uses: numso/slack-stream/finish-step@master
 
