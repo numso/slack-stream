@@ -1,0 +1,15 @@
+name: 'SlackStream:Error'
+description: 'Update a slack message with error status'
+inputs:
+  token:
+    description: 'Slack Bot Token (must have chat:write and channels:history)'
+    required: true
+  channel:
+    description: 'Which channel to post in. Must be the channel id'
+    required: true
+  ts:
+    description: 'testing'
+    required: true
+runs:
+  using: 'node14'
+  main: 'index.js'

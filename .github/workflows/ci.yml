@@ -1,0 +1,30 @@
+name: 'Publish'
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: numso/slack-stream/create@master
+        with:
+          token: ${{ secrets.SLACK_TOKEN }}
+          channel: ${{ secrets.SLACK_CHANNEL }}
+          actions:
+            - Test
+            - Build
+            - Verify
+            - Production
+            - Whatever
+      - uses: numso/slack-stream/update@master
+        with:
+          name: 'Test'
+      - uses: numso/slack-stream/update@master
+        with:
+          name: 'Build'
+      - uses: numso/slack-stream/update@master
+        with:
+          name: 'Deploy'

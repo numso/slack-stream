@@ -1,12 +1,16 @@
+const core = require('@actions/core')
 const axios = require('axios')
 
-module.exports = ({ TOKEN, CHANNEL, TS }) =>
+try {
+  const token = core.getInput('token')
+  const channel = core.getInput('channel')
+  const ts = core.getInput('ts')
   axios
     .get('https://slack.com/api/conversations.history', {
-      params: { channel: CHANNEL, latest: TS, limit: 1, inclusive: true },
+      params: { channel, latest: ts, limit: 1, inclusive: true },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${TOKEN}`
+        Authorization: `Bearer ${token}`
       }
     })
     .then(resp => {
@@ -19,12 +23,15 @@ module.exports = ({ TOKEN, CHANNEL, TS }) =>
     .then(blocks =>
       axios.post(
         'https://slack.com/api/chat.update',
-        { channel: CHANNEL, ts: TS, blocks },
+        { channel, ts, blocks },
         {
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            Authorization: `Bearer ${TOKEN}`
+            Authorization: `Bearer ${token}`
           }
         }
       )
     )
+} catch (error) {
+  core.setFailed(error.message)
+}

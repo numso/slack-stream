@@ -1,12 +1,19 @@
+const core = require('@actions/core')
 const axios = require('axios')
 
-module.exports = ({ TOKEN, CHANNEL, TS, NAME }) =>
+try {
+  const {
+    SLACK_TOKEN: token,
+    SLACK_CHANNEL: channel,
+    SLACK_TS: ts
+  } = process.env
+  const name = core.getInput('name')
   axios
     .get('https://slack.com/api/conversations.history', {
-      params: { channel: CHANNEL, latest: TS, limit: 1, inclusive: true },
+      params: { channel, latest: ts, limit: 1, inclusive: true },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${TOKEN}`
+        Authorization: `Bearer ${token}`
       }
     })
     .then(resp => {
@@ -15,8 +22,8 @@ module.exports = ({ TOKEN, CHANNEL, TS, NAME }) =>
         .replace(/:gh-actions-running:/g, ':gh-actions-approved:')
         .split(' --&gt; ')
         .map(value => {
-          if (value !== `:gh-actions-pending: ${NAME}`) return value
-          return `:gh-actions-running: ${NAME}`
+          if (value !== `:gh-actions-pending: ${name}`) return value
+          return `:gh-actions-running: ${name}`
         })
         .join(' --> ')
       return blocks
@@ -24,12 +31,15 @@ module.exports = ({ TOKEN, CHANNEL, TS, NAME }) =>
     .then(blocks =>
       axios.post(
         'https://slack.com/api/chat.update',
-        { channel: CHANNEL, ts: TS, blocks },
+        { channel, ts, blocks },
         {
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
-            Authorization: `Bearer ${TOKEN}`
+            Authorization: `Bearer ${token}`
           }
         }
       )
     )
+} catch (error) {
+  core.setFailed(error.message)
+}
