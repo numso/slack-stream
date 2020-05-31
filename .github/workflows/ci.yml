@@ -19,6 +19,8 @@ jobs:
       - run: ls -al $RUNNER_TEMP
       - run: ls -al $RUNNER_TEMP/_github_workflow
       - run: ls -al $RUNNER_WORKSPACE
+      - run: ls -al /home/runner/work
+      - run: ls -al /home/runner
       - name: 'Test'
         uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
