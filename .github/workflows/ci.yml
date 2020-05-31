@@ -11,8 +11,8 @@ jobs:
       - uses: numso/slack-stream/create@master
         with:
           token: ${{ secrets.SLACK_TOKEN }}
-          channel: '#robots'
-          steps: 'Test|Build|Deploy'
+          channel: ${{ secrets.SLACK_CHANNEL }}
+          steps: 'Test|Build|Deploy Verify|Deploy Production|Repository'
       - run: sleep 1s
 
       - uses: numso/slack-stream/start-step@master
@@ -24,5 +24,16 @@ jobs:
       - uses: numso/slack-stream/finish-step@master
 
       - uses: numso/slack-stream/start-step@master
+      - run: asotneuhsateu
+      - uses: numso/slack-stream/finish-step@master
+
+      - uses: numso/slack-stream/start-step@master
       - run: sleep 3s
       - uses: numso/slack-stream/finish-step@master
+
+      - uses: numso/slack-stream/start-step@master
+      - run: sleep 3s
+      - uses: numso/slack-stream/finish-step@master
+
+      - if: ${{ failure() }}
+        uses: numso/slack-stream/error@master

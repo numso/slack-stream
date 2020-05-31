@@ -6,10 +6,11 @@ try {
     SLACK_TOKEN: token,
     SLACK_CHANNEL: channel,
     SLACK_TS: ts,
-    SLACK_STEP_INDEX: index,
+    SLACK_STEP_INDEX,
     SLACK_TIME: time
   } = process.env
-  core.exportVariable('SLACK_STEP_INDEX', parseInt(index) + 1)
+  const index = parseInt(SLACK_STEP_INDEX || '0')
+  core.exportVariable('SLACK_STEP_INDEX', index + 1)
   const endTime = +new Date()
   const totalSeconds = Math.round((endTime - time) / 1000)
   const minutes = Math.floor(totalSeconds / 60)
@@ -28,7 +29,7 @@ try {
       blocks[1].text.text = blocks[1].text.text
         .split(' --&gt; ')
         .map((value, i) => {
-          if (parseInt(index) !== i) return value
+          if (index !== i) return value
           return value.replace('running:', 'approved:') + duration
         })
         .join(' --> ')
