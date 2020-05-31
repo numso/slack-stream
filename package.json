@@ -1,0 +1,11 @@
+{
+  "name": "slack-stream",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:numso/slack-stream.git",
+  "author": "Dallin Osmun <dosmun@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "0.19.2"
+  }
+}
