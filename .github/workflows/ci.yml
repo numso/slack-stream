@@ -14,6 +14,10 @@ jobs:
           channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Deploy'
 
+      - run: ls -al $GITHUB_WORKSPACE
+      - run: cat $GITHUB_EVENT_PATH
+      - run: ls -al $RUNNER_TEMP
+      - run: ls -al $RUNNER_WORKSPACE
       - name: 'Test'
         uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
