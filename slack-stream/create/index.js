@@ -2,7 +2,9 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const axios = require('axios')
 
-try {
+const utils = require('../utils')
+
+utils.wrap(async () => {
   const token = core.getInput('token')
   const channel = core.getInput('channel')
   const steps = core.getInput('steps').split('|')
@@ -31,7 +33,7 @@ try {
       { type: 'divider' }
     ]
   }
-  axios
+  return axios
     .post('https://slack.com/api/chat.postMessage', body, {
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
@@ -43,6 +45,4 @@ try {
       core.exportVariable('SLACK_CHANNEL', channel)
       core.exportVariable('SLACK_TS', resp.data.ts)
     })
-} catch (error) {
-  core.setFailed(error.message)
-}
+})
