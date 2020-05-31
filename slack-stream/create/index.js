@@ -2,9 +2,9 @@ const core = require('@actions/core')
 const github = require('@actions/github')
 const axios = require('axios')
 
-const utils = require('../utils')
+const { wrap, headers } = require('../utils')
 
-utils.wrap(async () => {
+wrap(async () => {
   core.exportVariable('SLACK_TOKEN', core.getInput('token'))
   core.exportVariable('SLACK_CHANNEL', core.getInput('channel'))
   const steps = core.getInput('steps').split('|')
@@ -36,7 +36,7 @@ utils.wrap(async () => {
   const resp = await axios.post(
     'https://slack.com/api/chat.postMessage',
     body,
-    { headers: utils.headers() }
+    { headers: headers() }
   )
   core.exportVariable('SLACK_TS', resp.data.ts)
 })
