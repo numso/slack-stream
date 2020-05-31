@@ -19,7 +19,7 @@ jobs:
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
-      - run: sleep 1s
+      - run: aoeuaoeuoeu
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
