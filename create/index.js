@@ -7,9 +7,10 @@ try {
   const channel = core.getInput('channel')
   const steps = core.getInput('steps').split('|')
   const [org, repo] = process.env.GITHUB_REPOSITORY.split('/')
-  console.log(process.env)
-  const url = `https://www.github.com/${org}/${repo}/runs/${123}`
+  const url = `https://www.github.com/${org}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`
   const { compare, pusher } = github.context.payload
+  console.log(process.env)
+  console.log(github.context)
   const body = {
     channel,
     blocks: [

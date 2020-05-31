@@ -28,7 +28,7 @@ try {
       blocks[1].text.text = blocks[1].text.text
         .split(' --&gt; ')
         .map((value, i) => {
-          if (index !== i) return value
+          if (parseInt(index) !== i) return value
           return value.replace('running:', 'approved:') + duration
         })
         .join(' --> ')
