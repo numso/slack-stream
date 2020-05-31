@@ -17,6 +17,7 @@ jobs:
       - run: ls -al $GITHUB_WORKSPACE
       - run: cat $GITHUB_EVENT_PATH
       - run: ls -al $RUNNER_TEMP
+      - run: ls -al $RUNNER_TEMP/_github_workflow
       - run: ls -al $RUNNER_WORKSPACE
       - name: 'Test'
         uses: numso/slack-stream/slack-stream/start@master
