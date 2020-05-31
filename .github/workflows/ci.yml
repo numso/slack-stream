@@ -13,6 +13,7 @@ jobs:
           token: ${{ secrets.SLACK_TOKEN }}
           channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Deploy'
+          blah: ${{ steps }}
 
       - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s

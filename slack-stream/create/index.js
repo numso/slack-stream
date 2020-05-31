@@ -9,6 +9,7 @@ try {
   const [org, repo] = process.env.GITHUB_REPOSITORY.split('/')
   const url = `https://www.github.com/${org}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`
   const { compare, pusher } = github.context.payload
+  console.log(core.getInput('blah'))
   console.log(github.context)
   console.log(process.env)
   const body = {
