@@ -8,11 +8,10 @@ jobs:
     name: 'Build'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
       - uses: numso/slack-stream/create@master
         with:
           token: ${{ secrets.SLACK_TOKEN }}
-          channel: ${{ secrets.SLACK_CHANNEL }}
+          channel: '#robots'
           steps: 'Test|Build|Deploy'
       - run: sleep 1s
 
