@@ -23,9 +23,12 @@ jobs:
       - run: ls -al /home/runner/work/_PipelineMapping
       - run: ls -al /home/runner/work/_PipelineMapping/numso
       - run: ls -al /home/runner/work/_PipelineMapping/numso/slack-stream
+      - run: cat /home/runner/work/_PipelineMapping/numso/slack-stream/PipelineFolder.json
       - run: ls -al /home/runner/work/_actions
       - run: ls -al /home/runner/work/_actions/numso
       - run: ls -al /home/runner/work/_actions/numso/slack-stream
+      - run: ls -al /home/runner/work/_actions/numso/slack-stream/master
+      - run: cat /home/runner/work/_actions/numso/slack-stream/master.completed
       - run: ls -al /home/runner
       - run: ls -al /home/runner/runners
       - run: ls -al /home/runner/warmup
