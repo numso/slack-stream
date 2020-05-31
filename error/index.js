@@ -31,7 +31,7 @@ try {
         .map((value, i) => {
           if (index !== i) return value
           if (value.indexOf('running:') === -1) return value
-          return value.replace('running:', 'approved:') + duration
+          return value.replace('running:', 'denied:') + duration
         })
         .join(' --> ')
 
