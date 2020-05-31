@@ -5,16 +5,10 @@ const axios = require('axios')
 try {
   const token = core.getInput('token')
   const channel = core.getInput('channel')
+  const steps = core.getInput('steps').split('|')
   const [org, repo] = process.env.GITHUB_REPOSITORY.split('/')
   const url = `https://www.github.com/${org}/${repo}`
   const { compare, pusher } = github.context.payload
-
-  // TODO::
-  const actions = ['Test', 'Build', 'Deploy']
-  const actioninp = core.getInput('actions')
-  console.log(typeof actioninp)
-  console.log(actioninp)
-
   const body = {
     channel,
     blocks: [
@@ -29,7 +23,7 @@ try {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: actions
+          text: steps
             .map(title => `:gh-actions-pending: ${title}`)
             .join(' --> ')
         }

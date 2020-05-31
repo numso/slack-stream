@@ -13,12 +13,7 @@ jobs:
         with:
           token: ${{ secrets.SLACK_TOKEN }}
           channel: ${{ secrets.SLACK_CHANNEL }}
-          actions:
-            - Test
-            - Build
-            - Verify
-            - Production
-            - Whatever
+          steps: 'Test|Build|Deploy'
       - uses: numso/slack-stream/update@master
         with:
           name: 'Test'
