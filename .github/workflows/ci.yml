@@ -20,7 +20,12 @@ jobs:
       - run: ls -al $RUNNER_TEMP/_github_workflow
       - run: ls -al $RUNNER_WORKSPACE
       - run: ls -al /home/runner/work
+      - run: ls -al /home/runner/work/_PipelineMapping
+      - run: ls -al /home/runner/work/_actions
       - run: ls -al /home/runner
+      - run: ls -al /home/runner/runners
+      - run: ls -al /home/runner/warmup
+      - run: ls -al /home/runner/factory
       - name: 'Test'
         uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
