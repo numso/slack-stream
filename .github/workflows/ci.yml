@@ -8,6 +8,7 @@ jobs:
     name: 'Build'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: numso/slack-stream/slack-stream/create@master
         with:
           token: ${{ secrets.SLACK_TOKEN }}
@@ -15,7 +16,10 @@ jobs:
           steps: 'Test|Build|Verify|Deploy'
 
       - uses: numso/slack-stream/slack-stream/start@master
-      - run: sleep 3s
+      - run: yarn
+      - run: yarn test:prettier
+      - run: yarn test:lint
+      - run: yarn test
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master

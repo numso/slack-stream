@@ -1,0 +1,20 @@
+{
+  "name": "slack-stream",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:numso/slack-stream.git",
+  "author": "Dallin Osmun <dosmun@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test:lint": "eslint \"src/**/*.js\"",
+    "test:prettier": "prettier-standard 'src/**' --check",
+    "test": "echo 'need some tests'"
+  },
+  "devDependencies": {
+    "prettier-standard": "^16.3.0",
+    "standard": "^14.3.4"
+  },
+  "prettier": {
+    "alignTernaryLines": false
+  }
+}
