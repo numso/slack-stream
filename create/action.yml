@@ -14,5 +14,5 @@ outputs:
   ts:
     description: 'The ID of the posted message'
 runs:
-  using: 'node14'
+  using: 'node12'
   main: 'index.js'
