@@ -14,40 +14,15 @@ jobs:
           channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Deploy'
 
-      - run: ls -al $HOME
-      - run: ls -al $GITHUB_WORKSPACE
-      - run: cat $GITHUB_EVENT_PATH
-      - run: ls -al $RUNNER_TEMP
-      - run: ls -al $RUNNER_TEMP/_github_workflow
-      - run: ls -al $RUNNER_WORKSPACE
-      - run: ls -al /home/runner/work
-      - run: ls -al /home/runner/work/_PipelineMapping
-      - run: ls -al /home/runner/work/_PipelineMapping/numso
-      - run: ls -al /home/runner/work/_PipelineMapping/numso/slack-stream
-      - run: cat /home/runner/work/_PipelineMapping/numso/slack-stream/PipelineFolder.json
-      - run: ls -al /home/runner/work/_actions
-      - run: ls -al /home/runner/work/_actions/numso
-      - run: ls -al /home/runner/work/_actions/numso/slack-stream
-      - run: ls -al /home/runner/work/_actions/numso/slack-stream/master
-      - run: ls -al /home/runner/work/_actions/numso/slack-stream/master/.github
-      - run: ls -al /home/runner/work/_actions/numso/slack-stream/master/slack-stream
-      - run: cat /home/runner/work/_actions/numso/slack-stream/master.completed
-      - run: ls -al /home/runner
-      - run: ls -al /home/runner/runners
-      - run: ls -al /home/runner/warmup
-      - run: ls -al /home/runner/factory
-      - name: 'Test'
-        uses: numso/slack-stream/slack-stream/start@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
       - uses: numso/slack-stream/slack-stream/finish@master
 
-      - name: 'Build'
-        uses: numso/slack-stream/slack-stream/start@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 1s
       - uses: numso/slack-stream/slack-stream/finish@master
 
-      - name: 'Deploy'
-        uses: numso/slack-stream/slack-stream/start@master
+      - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 2s
       - uses: numso/slack-stream/slack-stream/finish@master
 
