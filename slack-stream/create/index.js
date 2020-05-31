@@ -5,14 +5,14 @@ const axios = require('axios')
 const utils = require('../utils')
 
 utils.wrap(async () => {
-  const token = core.getInput('token')
-  const channel = core.getInput('channel')
+  core.exportVariable('SLACK_TOKEN', core.getInput('token'))
+  core.exportVariable('SLACK_CHANNEL', core.getInput('channel'))
   const steps = core.getInput('steps').split('|')
   const [org, repo] = process.env.GITHUB_REPOSITORY.split('/')
   const url = `https://www.github.com/${org}/${repo}/actions/runs/${process.env.GITHUB_RUN_ID}`
   const { compare, pusher } = github.context.payload
   const body = {
-    channel,
+    channel: process.env.SLACK_CHANNEL,
     blocks: [
       {
         type: 'section',
@@ -33,16 +33,10 @@ utils.wrap(async () => {
       { type: 'divider' }
     ]
   }
-  return axios
-    .post('https://slack.com/api/chat.postMessage', body, {
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        Authorization: `Bearer ${token}`
-      }
-    })
-    .then(resp => {
-      core.exportVariable('SLACK_TOKEN', token)
-      core.exportVariable('SLACK_CHANNEL', channel)
-      core.exportVariable('SLACK_TS', resp.data.ts)
-    })
+  const resp = await axios.post(
+    'https://slack.com/api/chat.postMessage',
+    body,
+    { headers: utils.headers() }
+  )
+  core.exportVariable('SLACK_TS', resp.data.ts)
 })

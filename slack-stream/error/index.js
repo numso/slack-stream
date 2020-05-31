@@ -5,7 +5,7 @@ const utils = require('../utils')
 
 utils.wrap(async () => {
   const duration = utils.getDuration()
-  return utils.update(fullText =>
+  await utils.update(fullText =>
     utils
       .mapMessage(text => {
         if (text.indexOf('running:') === -1) return text

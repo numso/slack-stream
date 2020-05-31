@@ -11,6 +11,11 @@ exports.wrap = fn => {
   }
 }
 
+exports.headers = () => ({
+  'Content-Type': 'application/json; charset=utf-8',
+  Authorization: `Bearer ${process.env.SLACK_TOKEN}`
+})
+
 exports.getDuration = () => {
   const total = Math.round((+new Date() - process.env.SLACK_TIME) / 1000)
   const minutes = Math.floor(total / 60)
@@ -27,17 +32,13 @@ exports.mapMessage = transform => text =>
     .join(' --> ')
 
 exports.update = transform => {
-  const {
-    SLACK_TOKEN: token,
-    SLACK_CHANNEL: channel,
-    SLACK_TS: ts
-  } = process.env
+  const { SLACK_CHANNEL: channel, SLACK_TS: ts } = process.env
   return axios
     .get('https://slack.com/api/conversations.history', {
       params: { channel, latest: ts, limit: 1, inclusive: true },
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${token}`
+        ...exports.headers(),
+        'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
     .then(resp => {
@@ -49,12 +50,7 @@ exports.update = transform => {
       axios.post(
         'https://slack.com/api/chat.update',
         { channel, ts, blocks },
-        {
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-            Authorization: `Bearer ${token}`
-          }
-        }
+        { headers: exports.headers() }
       )
     )
 }
