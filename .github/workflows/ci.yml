@@ -16,10 +16,7 @@ jobs:
           steps: 'Test|Build|Verify|Deploy'
 
       - uses: numso/slack-stream/slack-stream/start@master
-      - run: yarn
-      - run: yarn test:prettier
-      - run: yarn test:lint
-      - run: yarn test
+      - run: sleep 1s
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
@@ -28,6 +25,7 @@ jobs:
 
       - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 3s
+      - run: sanotheusnatoeu
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
