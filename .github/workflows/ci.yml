@@ -24,8 +24,7 @@ jobs:
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
-      - run: sleep 3s
-      - run: sanotheusnatoeu
+      - run: sleep 4s
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - uses: numso/slack-stream/slack-stream/start@master
