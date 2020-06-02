@@ -1,4 +1,4 @@
-name: 'CI'
+name: 'Deploy'
 on: pull_request
 env:
   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
