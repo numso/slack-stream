@@ -26,7 +26,7 @@ wrap(async () => {
         type: 'context',
         elements: info.map(({ label, url, value }) => ({
           type: 'mrkdwn',
-          text: `*${label}*\n<${url}|${value}>`
+          text: `*${label}*  \n<${url}|${value}>`
         }))
       },
       {
