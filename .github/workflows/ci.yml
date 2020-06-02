@@ -2,7 +2,10 @@ name: 'Test'
 on:
   push:
     branches:
-      - pausethisfornow
+      - master
+env:
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+  SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
 jobs:
   build:
     name: 'Build'
@@ -11,8 +14,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: numso/slack-stream/slack-stream/create@master
         with:
-          token: ${{ secrets.SLACK_TOKEN }}
-          channel: ${{ secrets.SLACK_CHANNEL }}
           steps: 'Test|Build|Verify|Deploy'
 
       - uses: numso/slack-stream/slack-stream/start@master
@@ -33,3 +34,5 @@ jobs:
 
       - if: ${{ failure() }}
         uses: numso/slack-stream/slack-stream/error@master
+      - if: ${{ cancelled() }}
+        uses: numso/slack-stream/slack-stream/cancel@master

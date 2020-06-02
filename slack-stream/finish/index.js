@@ -1,5 +1,4 @@
 const core = require('@actions/core')
-const axios = require('axios')
 
 const { wrap, getDuration, update, mapMessage, getIndex } = require('../utils')
 

@@ -10,11 +10,16 @@ First make sure to add all of the emoji in `_emoji\*.png` to your slack.
 
 Then must generate a slack bot user with the `chat:write` and `channels:history` scopes.
 
-This feature is comprised of 4 actions. Configure the create at the beginning of your job. Put the start/finish around each step of your job. Lastly, make sure to report errors on failure.
+All of these steps rely on `SLACK_TOKEN` and `SLACK_CHANNEL` being set as environment variables.
+
+This feature is comprised of 5 actions. Configure the create at the beginning of your job. Put the start/finish around each step of your job. Lastly, make sure to report errors/cancellation at the end.
 
 Also, make sure you call start/finish for every step you've defined. Here's an example:
 
 ```
+env:
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+  SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_ID }}
 jobs:
   build:
     name: 'Build'
@@ -22,8 +27,6 @@ jobs:
     steps:
       - uses: numso/slack-stream/slack-stream/create@master
         with:
-          token: ${{ secrets.SLACK_TOKEN }}
-          channel: ${{ secrets.SLACK_CHANNEL_ID }}
           steps: 'Build project|Deploy it somewhere'
 
       - uses: numso/slack-stream/slack-stream/start@master
@@ -36,4 +39,6 @@ jobs:
 
       - if: ${{ failure() }}
         uses: numso/slack-stream/slack-stream/error@master
+      - if: ${{ cancelled() }}
+        uses: numso/slack-stream/slack-stream/cancel@master
 ```

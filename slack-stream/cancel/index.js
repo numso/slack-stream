@@ -5,9 +5,9 @@ wrap(async () => {
   await update(fullText =>
     mapMessage(text => {
       if (text.indexOf('running:') === -1) return text
-      return text.replace('running:', 'denied:') + duration
+      return text.replace('running:', 'cancelled:') + duration
     })(fullText)
       .replace(/pending:/g, 'cancelled:')
-      .replace(/running:/g, 'denied:')
+      .replace(/running:/g, 'cancelled:')
   )
 })
