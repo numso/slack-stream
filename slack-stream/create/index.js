@@ -4,6 +4,7 @@ const axios = require('axios')
 
 const { wrap, headers } = require('../utils')
 
+// pr test
 wrap(async () => {
   const { actor, workflow, ref, sha, payload } = github.context
   const { html_url: base, name: repo } = payload.repository
