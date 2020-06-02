@@ -5,20 +5,23 @@ const axios = require('axios')
 const { wrap, headers } = require('../utils')
 
 wrap(async () => {
-  const { actor, workflow, ref, sha, payload } = github.context
+  const { actor, workflow: wf, sha, payload } = github.context
   const { html_url: base, name: repo } = payload.repository
-  const { html_url: prUrl, number: prNum } = payload.pull_request || {}
-  const r = process.env.GITHUB_RUN_ID
   const steps = core.getInput('steps').split('|')
   const info = [
     { label: 'Repo', url: base, value: repo },
-    { label: 'By', url: `https://github.com/${actor}`, value: actor },
-    prUrl
-      ? { label: 'PR', url: prUrl, value: `#${prNum}` }
-      : { label: 'Branch', url: payload.compare, value: ref.split('/').pop() },
-    { label: 'Workflow', url: `${base}/commit/${sha}/checks`, value: workflow },
-    { label: 'Artifacts', url: `${base}/actions/runs/${r}`, value: 'artifacts' }
+    { label: 'Author', url: `https://github.com/${actor}`, value: actor }
   ]
+  if (payload.pull_request) {
+    const { html_url: prUrl, number: prNum } = payload.pull_request
+    info.push({ label: 'PR', url: prUrl, value: `#${prNum}` })
+  } else {
+    const compareVal = payload.compare.split('/').pop()
+    info.push(
+      { label: 'Workflow', url: `${base}/commit/${sha}/checks`, value: wf },
+      { label: 'Compare', url: payload.compare, value: compareVal }
+    )
+  }
   const body = {
     channel: process.env.SLACK_CHANNEL,
     blocks: [
@@ -26,7 +29,7 @@ wrap(async () => {
         type: 'context',
         elements: info.map(({ label, url, value }) => ({
           type: 'mrkdwn',
-          text: `*${label}*  \n<${url}|${value}>`
+          text: `*${label}*   \n<${url}|${value}>`
         }))
       },
       {
