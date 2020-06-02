@@ -1,8 +1,5 @@
 name: 'CI'
-on:
-  push:
-    branches:
-      - master
+on: pull_request
 env:
   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
