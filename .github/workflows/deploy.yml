@@ -1,0 +1,38 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - master
+env:
+  SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+  SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+jobs:
+  Deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: numso/slack-stream/slack-stream/create@master
+        with:
+          steps: 'Test|Build|Verify|Deploy'
+
+      - uses: numso/slack-stream/slack-stream/start@master
+      - run: sleep 1s
+      - uses: numso/slack-stream/slack-stream/finish@master
+
+      - uses: numso/slack-stream/slack-stream/start@master
+      - run: sleep 3s
+      - uses: numso/slack-stream/slack-stream/finish@master
+
+      - uses: numso/slack-stream/slack-stream/start@master
+      - run: sleep 5s
+      - uses: numso/slack-stream/slack-stream/finish@master
+
+      - uses: numso/slack-stream/slack-stream/start@master
+      - run: sleep 2s
+      - uses: numso/slack-stream/slack-stream/finish@master
+
+      - if: ${{ failure() }}
+        uses: numso/slack-stream/slack-stream/error@master
+      - if: ${{ cancelled() }}
+        uses: numso/slack-stream/slack-stream/cancel@master

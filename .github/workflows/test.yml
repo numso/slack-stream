@@ -1,32 +1,20 @@
-name: 'CI'
+name: Test
 on: pull_request
 env:
   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
 jobs:
-  build:
-    name: 'Build'
+  Test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: numso/slack-stream/slack-stream/create@master
         with:
-          steps: 'Test|Build|Verify|Deploy'
+          steps: 'Test'
 
       - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 1s
-      - uses: numso/slack-stream/slack-stream/finish@master
-
-      - uses: numso/slack-stream/slack-stream/start@master
-      - run: sleep 3s
-      - uses: numso/slack-stream/slack-stream/finish@master
-
-      - uses: numso/slack-stream/slack-stream/start@master
-      - run: sleep 5s
-      - uses: numso/slack-stream/slack-stream/finish@master
-
-      - uses: numso/slack-stream/slack-stream/start@master
-      - run: sleep 2s
       - uses: numso/slack-stream/slack-stream/finish@master
 
       - if: ${{ failure() }}
