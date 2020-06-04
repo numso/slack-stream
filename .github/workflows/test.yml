@@ -13,6 +13,10 @@ jobs:
         with:
           steps: 'Test'
 
+      - run: aws --version
+      - run: echo $PATH
+      - run: env
+
       - uses: numso/slack-stream/slack-stream/start@master
       - run: sleep 1s
       - uses: numso/slack-stream/slack-stream/finish@master
