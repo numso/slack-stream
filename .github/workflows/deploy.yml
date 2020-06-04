@@ -6,6 +6,7 @@ on:
 env:
   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+  APP_VERSION: ${{ date +%Y%m%d%H%M%S }}
 jobs:
   Deploy:
     name: Deploy
